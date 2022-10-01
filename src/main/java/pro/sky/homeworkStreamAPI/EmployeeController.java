@@ -11,16 +11,5 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-public void FindMaxSalaryByDepart(@RequestParam int departmentId) {
-        EmployeeService.findMaxSalaryByDepartment(employees, departmentId);
-}
-    public void FindMinSalaryByDepart(@RequestParam int departmentId) {
-        EmployeeService.findMinSalaryByDepartment(employees, departmentId);
-    }
-    public void printByDepartment(@RequestParam int departmentId) {
-        EmployeeService.printByDepartment(employees, departmentId);
-    }
-    public void printAllByDepartments() {
-        EmployeeService.printByDepartment(employees);
-    }
+
 }
