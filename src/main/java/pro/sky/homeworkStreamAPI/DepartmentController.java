@@ -15,20 +15,20 @@ public class DepartmentController {
     }
 @GetMapping(path = "/departments/max-salary")
     public void findMaxSalaryByDepart(@RequestParam int departmentId) {
-        EmployeeService.findMaxSalaryByDepartment(departmentId);
+        DepartmentService.findMaxSalaryByDepartment(departmentId);
     }
     @GetMapping(path = "/departments/min-salary")
     public void findMinSalaryByDepart(@RequestParam int departmentId) {
-        EmployeeService.findMinSalaryByDepartment(departmentId);
+        DepartmentService.findMinSalaryByDepartment(departmentId);
     }
     @GetMapping(path = "/departments/all")
     public List<Employee> printByDepartment(@RequestParam int departmentId) {
-        EmployeeService.printByDepartment(departmentId);
+        DepartmentService.printByDepartment(departmentId);
         return List < Employee >;
     }
     @GetMapping(path = "/departments/all")
     public Map<int, List<Employee>> printAllByDepartments() {
-        EmployeeService.printByDepartment();
+        DepartmentService.printByDepartment();
         return Map<int, List<Employee>>;
     }
 }

@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static jdk.nashorn.internal.objects.NativeMath.max;
-
-
+@Service
 public class EmployeeService {
     private final List<Employee> employees = new ArrayList<>(Arrays.asList(
                 new Employee("Иванов Иван Иванович", 1, 50_000),
@@ -22,4 +20,8 @@ public class EmployeeService {
                 new Employee("Ежиков Мариан Владимирович", 1, 62_000),
                 new Employee("Башмачкин Акакий Акакиевич", 4, 55_000)
     ));
+
+    public Collection<Employee> findAll(){
+        return new ArrayList<>(employees);
+    }
 }

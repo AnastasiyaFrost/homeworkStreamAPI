@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Employee {
     private String fullname;
-    private double salary;
+    private int salary;
     private int department;
 
-    public Employee(String fullname, int department, double salary) {
+    public Employee(String fullname, int department, int salary) {
         this.fullname = fullname;
         this.department = department;
         this.salary = salary;
@@ -21,11 +21,11 @@ public class Employee {
         this.fullname = fullname;
     }
 
-    public double getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
