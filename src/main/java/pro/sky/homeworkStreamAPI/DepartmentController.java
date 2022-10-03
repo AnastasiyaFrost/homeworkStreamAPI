@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class DepartmentController {
@@ -14,21 +16,20 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 @GetMapping(path = "/departments/max-salary")
-    public void findMaxSalaryByDepart(@RequestParam int departmentId) {
-        DepartmentService.findMaxSalaryByDepartment(departmentId);
+    public Optional<Employee> findMaxSalaryByDepart(@RequestParam ("departmentId") int department) {
+         return departmentService.findEmployeeWithMaxSalaryFromDepartment(department);
     }
     @GetMapping(path = "/departments/min-salary")
-    public void findMinSalaryByDepart(@RequestParam int departmentId) {
-        DepartmentService.findMinSalaryByDepartment(departmentId);
+    public Optional<Employee> findMinSalaryByDepart(@RequestParam ("departmentId") int department) {
+        return departmentService.findEmployeeWithMinSalaryFromDepartment(department);
+    }
+    @GetMapping(path = "/departments/all", params = "departmentId")
+    public List<Employee> printByDepartment(@RequestParam ("departmentId") int department) {
+        return departmentService.printByDepartment(department);
+
     }
     @GetMapping(path = "/departments/all")
-    public List<Employee> printByDepartment(@RequestParam int departmentId) {
-        DepartmentService.printByDepartment(departmentId);
-        return List < Employee >;
-    }
-    @GetMapping(path = "/departments/all")
-    public Map<int, List<Employee>> printAllByDepartments() {
-        DepartmentService.printByDepartment();
-        return Map<int, List<Employee>>;
+    public Map<Integer, List<Employee>> printAllByDepartments() {
+        return departmentService.printAllByDepartments();
     }
 }
