@@ -1,24 +1,55 @@
 package pro.sky.homeworkStreamAPI;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 public class Employee {
+    private String name;
+    private String surname;
+    private String lastname;
+
     private String fullname;
     private int salary;
     private int department;
 
-    public Employee(String fullname, int department, int salary) {
-        this.fullname = fullname;
+    public Employee(String surname, String name, String lastname, int department, int salary) {
+        this.surname = capitalize(surname.toLowerCase());
+        this.name = capitalize(name.toLowerCase());
+        this.lastname = capitalize(lastname.toLowerCase());
+        this.fullname = surname + " " + name + " " + lastname;
         this.department = department;
         this.salary = salary;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getName() {
+        return name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFullname() {
+        return fullname;
     }
 
     public int getSalary() {
