@@ -12,10 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+import java.awt.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.when;
@@ -50,15 +48,14 @@ public class DepartmentServiceTest {
     @MethodSource("employeeWithMaxSalaryTestParams")
     public void employeeWithMaxSalaryTest(int department,
                                           Employee expected){
-        Assertions.assertThat(departmentService.
-                findEmployeeWithMaxSalaryFromDepartment(department)).isEqualTo(expected);
+        Assertions.assertEquals(expected, departmentService.
+                findEmployeeWithMaxSalaryFromDepartment(department));
     }
 
     @Test
     public void employeeWithMaxSalaryNegativeTest(){
-        Assertions.assertThatExceptionOfType(EmployeeNotFoundException.class)
-                .isThrown(() -> departmentService.
-                findEmployeeWithMaxSalaryFromDepartment(11));
+        Assertions.assertThrows(EmployeeNotFoundException.class,
+                () -> departmentService.findEmployeeWithMaxSalaryFromDepartment(11));
     }
 
     public static Stream<Arguments> employeeWithMaxSalaryTestParams(){
@@ -74,8 +71,8 @@ public class DepartmentServiceTest {
     @MethodSource("employeeWithMinSalaryTestParams")
     public void employeeWithMinSalaryTest(int department,
                                           Employee expected){
-        Assertions.assertThat(departmentService.
-                findEmployeeWithMinSalaryFromDepartment(department)).isEqualTo(expected);
+        Assertions.assertEquals(expected,
+                departmentService.findEmployeeWithMinSalaryFromDepartment(department));
     }
 
     public static Stream<Arguments> employeeWithMinSalaryTestParams(){
@@ -88,49 +85,62 @@ public class DepartmentServiceTest {
     }
     @Test
     public void employeeWithMinSalaryNegativeTest(){
-        Assertions.assertThatExceptionOfType(EmployeeNotFoundException.class)
-                .isThrown(() -> departmentService.
-                        findEmployeeWithMinSalaryFromDepartment(11));
+        Assertions.assertThrows(EmployeeNotFoundException.class,
+                () -> departmentService.findEmployeeWithMinSalaryFromDepartment(11));
     }
 
 
     @ParameterizedTest
     @MethodSource("printByDepartmentTestParams")
     public void printByDepartmentTest(int department,
-                                          List expected){
-        Assertions.assertThat(departmentService.
-                printByDepartment(department)).isEqualTo(expected);
+                                          List<Employee> expected){
+        Assertions.assertEquals(expected, departmentService.
+                printByDepartment(department));
     }
 
     public static Stream<Arguments> printByDepartmentTestParams(){
         return Stream.of(
                 Arguments.of(1, Collections.emptyList()),
-                Arguments.of(2, Arrays.asList(new Employee("Pepe", "Pig", "Pig",
-                                        2, 37_400),
+                Arguments.of(2, Arrays.asList(
+                        new Employee("Pepe", "Pig", "Pig",
+                                2, 37_400),
                                 new Employee("Иванов", "Иван", "Иванович",
                                         2, 50_000),
                                 new Employee("Сидоров", "Петр", "Петрович",
                                         2, 45_000)
-                                ),
-                Arguments.of(3, Arrays.asList(new Employee("Wuff", "Ann", "Marie",
-                        3, 28_877),
+                                )
+                ),
+                Arguments.of(3, Arrays.asList(
+                        new Employee("Wuff", "Ann", "Marie",
+                                3, 28_877),
                         new Employee("Смирнов", "Артем", "Иванович",
                                 3, 30_000),
                         new Employee("Иванов", "Алексей", "Алексеевич",
                                 3, 150_000)
                         )
+                )
         );
     }
 
 
-    public void printAllByDepartmentsTest(Collection<Employee> expected){
-        Assertions.assertThat(departmentService.printAllByDepartments()).containsExactlyInAnyOrderEntriesOf(
-                Map.of(2, List.of(new Employee("Pepe", "Pig", "Pig",
-                                2, 37_400),
-                        new Employee("Иванов", "Иван", "Иванович",
-                                2, 50_000),
-                        new Employee("Сидоров", "Петр", "Петрович",
-                                2, 45_000)))
-        );
+    private Map <Integer, List<Employee>> expectResult = new HashMap<>(Map.of(
+            2, List.of(new Employee("Pepe", "Pig", "Pig",
+                            2, 37_400),
+                    new Employee("Иванов", "Иван", "Иванович",
+                            2, 50_000),
+                    new Employee("Сидоров", "Петр", "Петрович",
+                            2, 45_000)),
+            3, List.of(new Employee("Wuff", "Ann", "Marie",
+                            3, 28_877),
+                    new Employee("Смирнов", "Артем", "Иванович",
+                            3, 30_000),
+                    new Employee("Иванов", "Алексей", "Алексеевич",
+                            3, 150_000))
+    )
+    );
+@Test
+public void printAllByDepartmentsTest(Map <Integer, List<Employee>> expectResult){
+        Assertions.assertEquals(expectResult,
+                        departmentService.printAllByDepartments());
     }
 }
