@@ -93,7 +93,7 @@ public class DepartmentServiceTest {
     @ParameterizedTest
     @MethodSource("printByDepartmentTestParams")
     public void printByDepartmentTest(int department,
-                                          List<Employee> expected){
+                                          List  <Employee> expected){
         Assertions.assertEquals(expected, departmentService.
                 printByDepartment(department));
     }

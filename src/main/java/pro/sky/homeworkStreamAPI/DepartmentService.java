@@ -15,16 +15,18 @@ public class DepartmentService {
     }
 
 
-    public Optional<Employee> findEmployeeWithMaxSalaryFromDepartment(int department) {
+    public Employee findEmployeeWithMaxSalaryFromDepartment(int department) {
        return employeeService.findAll().stream()
                 .filter(e -> e.getDepartment() == department)
-                .max(Comparator.comparingInt(employee -> employee.getSalary()));
+                .max(Comparator.comparingInt(employee -> employee.getSalary()))
+               .orElseThrow(()-> new EmployeeNotFoundException());
     }
 
-    public Optional<Employee> findEmployeeWithMinSalaryFromDepartment(int department) {
+    public Employee findEmployeeWithMinSalaryFromDepartment(int department) {
         return employeeService.findAll().stream()
                 .filter(e -> e.getDepartment() == department)
-                .min(Comparator.comparingInt(employee -> employee.getSalary()));
+                .min(Comparator.comparingInt(employee -> employee.getSalary()))
+                .orElseThrow(()-> new EmployeeNotFoundException());
     }
 
     public List<Employee> printByDepartment(int department) {

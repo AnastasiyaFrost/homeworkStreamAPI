@@ -10,8 +10,6 @@ public class Employee {
     private String name;
     private String surname;
     private String lastname;
-
-    private String fullname;
     private int salary;
     private int department;
 
@@ -19,7 +17,6 @@ public class Employee {
         this.surname = capitalize(surname.toLowerCase());
         this.name = capitalize(name.toLowerCase());
         this.lastname = capitalize(lastname.toLowerCase());
-        this.fullname = surname + " " + name + " " + lastname;
         this.department = department;
         this.salary = salary;
     }
@@ -49,7 +46,7 @@ public class Employee {
     }
 
     public String getFullname() {
-        return fullname;
+        return surname + " " + name + " " + lastname;
     }
 
     public int getSalary() {
@@ -71,7 +68,9 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "fullname='" + fullname + '\'' +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", salary=" + salary +
                 ", department=" + department +
                 '}';
@@ -82,11 +81,11 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(fullname, employee.fullname);
+        return salary == employee.salary && department == employee.department && Objects.equals(name, employee.name) && Objects.equals(surname, employee.surname) && Objects.equals(lastname, employee.lastname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fullname);
+        return Objects.hash(name, surname, lastname, salary, department);
     }
 }

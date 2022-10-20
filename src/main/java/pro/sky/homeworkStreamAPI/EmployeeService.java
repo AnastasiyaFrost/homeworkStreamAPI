@@ -10,7 +10,7 @@ import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 @Service
 public class EmployeeService {
-    private List<Employee> employees = new ArrayList<>(Arrays.asList(
+    private final List<Employee> employees = new ArrayList<>(Arrays.asList(
             new Employee("Иванов", "Иван", "Иванович", 1, 50_000),
             new Employee("Смирнов", "Артем", "Иванович", 3, 30_000),
             new Employee("Иванов", "Алексей", "Алексеевич", 3, 150_000),
@@ -39,22 +39,24 @@ throw new EmployeeAlreadyAddException();
             throw new InvalidInputException();
         }
         String fullname = surname + " " + name + " " + lastname;
-        Employee empl = (Employee) employees.stream().filter(e -> e.getFullname() == fullname);
+        Employee empl = (Employee) employees.stream().filter(e -> e.getFullname().equals(fullname));
         if (empl != null) {
             return  empl;
-        } else throw new EmployeeNotFoundException();
+        } else {throw new EmployeeNotFoundException();}
 }
 
 
-public List<Employee> remove(String surname, String name, String lastname) {
+public Employee remove(String surname, String name, String lastname) {
         if(!checkName(name, surname, lastname)) {
             throw new InvalidInputException();
         }
         String fullname = surname + " " + name + " " + lastname;
-    if (employees.contains(fullname)) {
-        employees.remove(fullname);
-        return employees;
-    } else throw new EmployeeNotFoundException();
+    Employee empl = (Employee) employees.stream().filter(e -> e.getFullname().equals(fullname));
+    if (empl != null) {
+        employees.remove(empl);
+        return  empl;
+    } else {throw new EmployeeNotFoundException();}
+
 }
     private boolean checkName(String name, String surname, String lastname) {
         return isAlpha(name) && isAlpha(surname) && isAlpha(lastname);
@@ -73,22 +75,5 @@ public List<Employee> remove(String surname, String name, String lastname) {
     public double countAverageSalary() {
     double average = (double) countSalarySum()/employees.size();
     return average;
-    }
-
-    public Optional<Employee> findEmployeeWithMinSalary() {
-        return employees.stream()
-                .min(Comparator.comparingInt(employee -> employee.getSalary()));
-    }
-
-    public Optional<Employee> findEmployeeWithMaxSalary() {
-        return employees.stream()
-                .max(Comparator.comparingInt(employee -> employee.getSalary()));
-    }
-
-    public List<String> printAllFullNames() {
-        final List<String> fullnames = employees.stream()
-                .map(Employee::getFullname)
-                .collect(Collectors.toList());
-        return fullnames;
     }
 }
