@@ -1,16 +1,18 @@
 package pro.sky.homeworkStreamAPI;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 @Service
 public class EmployeeService {
-    private final List<Employee> employees = new ArrayList<>(Arrays.asList(
+    private static final List<Employee> employees = new ArrayList<>(Arrays.asList(
             new Employee("Иванов", "Иван", "Иванович", 1, 50_000),
             new Employee("Смирнов", "Артем", "Иванович", 3, 30_000),
             new Employee("Иванов", "Алексей", "Алексеевич", 3, 150_000),
@@ -22,13 +24,13 @@ public class EmployeeService {
             new Employee("Ежиков ", "Мариан", " Владимирович", 1, 62_000),
             new Employee("Башмачкин", "Акакий", " Акакиевич", 4, 55_000)
     ));
-public Employee add(String surname, String name, String lastname, int department, int salary) {
+public static Employee add(String surname, String name, String lastname, int department, int salary) {
     if(!checkName(name, surname, lastname)) {
         throw new InvalidInputException();
     }
     Employee employee = new Employee(surname, name, lastname, department, salary);
     if(employees.contains(employee.getFullname())) {
-throw new EmployeeAlreadyAddException();
+        throw new EmployeeAlreadyAddException();
     }
     employees.add(employee);
     return employee;
@@ -46,7 +48,7 @@ throw new EmployeeAlreadyAddException();
 }
 
 
-public Employee remove(String surname, String name, String lastname) {
+public static Employee remove(String surname, String name, String lastname) {
         if(!checkName(name, surname, lastname)) {
             throw new InvalidInputException();
         }
@@ -58,7 +60,7 @@ public Employee remove(String surname, String name, String lastname) {
     } else {throw new EmployeeNotFoundException();}
 
 }
-    private boolean checkName(String name, String surname, String lastname) {
+    private static boolean checkName(String name, String surname, String lastname) {
         return isAlpha(name) && isAlpha(surname) && isAlpha(lastname);
     }
 
@@ -66,7 +68,7 @@ public Employee remove(String surname, String name, String lastname) {
     public Collection<Employee> findAll() {
         return new ArrayList<>(employees);
     }
-    public int countSalarySum() {
+    public static int countSalarySum() {
         int allSalarySum = 0;
         employees.stream()
                 .map(e -> e.getSalary() + allSalarySum);
