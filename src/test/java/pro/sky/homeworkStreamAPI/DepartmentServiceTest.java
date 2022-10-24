@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.awt.List;
+import java.util.List;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -92,7 +92,7 @@ public class DepartmentServiceTest {
     @ParameterizedTest
     @MethodSource("printByDepartmentTestParams")
     public void printByDepartmentTest(int department,
-                                          List expect){
+                                          List<Employee> expect){
         Assertions.assertEquals(expect, departmentService.
                 printByDepartment(department));
     }
@@ -122,22 +122,22 @@ public class DepartmentServiceTest {
     }
 
 
-    private Map <Integer, List> expectResult = new HashMap<>(Map.of(
+    private Map <Integer, List<Employee>> expectResult = new HashMap<>(Map.of(
             2, List.of(new Employee("Pepe", "Pig", "Pig",
                             2, 37_400),
                     new Employee("Иванов", "Иван", "Иванович",
                             2, 50_000),
                     new Employee("Сидоров", "Петр", "Петрович",
-                            2, 45_000))),
+                            2, 45_000)),
             3, List.of(new Employee("Wuff", "Ann", "Marie",
                             3, 28_877),
                     new Employee("Смирнов", "Артем", "Иванович",
                             3, 30_000),
                     new Employee("Иванов", "Алексей", "Алексеевич",
                             3, 150_000))
-    );
+    ));
 @Test
-public void printAllByDepartmentsTest(Map <Integer, List> expectResult){
+public void printAllByDepartmentsTest(Map <Integer, List<Employee>> expectResult){
         Assertions.assertEquals(expectResult,
                         departmentService.printAllByDepartments());
     }
